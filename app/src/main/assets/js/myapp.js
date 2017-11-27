@@ -773,10 +773,9 @@ function clearAllLocks()
         success: function (stock_count)
         {
             for (var item_id in stock_count)
-            {
                 $.post(OUTLET_URL + '/order_app/lock_item/' + item_id,
 
-          { "direction": "decrease", "delta_count": Number(stock_count[item_id]["locked_count"]) -(isNaN(Number(stock_count[item_id]["mobile_locked_count"]))?0:Number(stock_count[item_id]["mobile_locked_count"])) })
+          { "direction": "decreaseCL", "delta_count": Number(stock_count[item_id]["locked_count"]) -(isNaN(Number(stock_count[item_id]["mobile_locked_count"]))?0:Number(stock_count[item_id]["mobile_locked_count"])) })
           .done(function ()
           {
           })
@@ -1145,6 +1144,8 @@ function saveSettings()
    simpleStorage.set("PORT_NUMBER", $('#Singapore_Port_Number').val());
 
     snacksVisibility();
+    var selectedType= $( "#payment_type option:selected" ).text();
+    simpleStorage.set("PAYMENT_TYPE",selectedType);
 
     Android.saveSettings(INSPIRENETZ_DIGEST_AUTH, INSPIRENETZ_USERNAME,
     INSPIRENETZ_PASSWORD, INSPIRENETZ_HTTP_URL);
